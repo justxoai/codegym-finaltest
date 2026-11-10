@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/main :: layout(~{::title}, ~{::section})}">
+<head>
+    <title>Thêm mới khách hàng</title>
+</head>
+<body>
+<section>
+    <h1 class="page-title text-center">Thêm mới khách hàng</h1>
+
+    <form class="card form-card" th:action="@{/khach-hang/them-moi}" th:object="${khachHangForm}" method="post" novalidate>
+        <div class="form-row">
+            <label class="form-label" for="tenKhachHang">Tên khách hàng<span class="required">*</span></label>
+            <div class="form-field">
+                <input class="form-input" type="text" th:field="*{tenKhachHang}" placeholder="Nguyễn Văn A"
+                       th:classappend="${#fields.hasErrors('tenKhachHang')} ? 'is-invalid'">
+                <div class="field-error" th:if="${#fields.hasErrors('tenKhachHang')}" th:errors="*{tenKhachHang}"></div>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <label class="form-label" for="soDienThoai">Số điện thoại<span class="required">*</span></label>
+            <div class="form-field">
+                <input class="form-input" type="text" inputmode="tel" th:field="*{soDienThoai}" placeholder="0905973155"
+                       th:classappend="${#fields.hasErrors('soDienThoai')} ? 'is-invalid'">
+                <div class="field-error" th:if="${#fields.hasErrors('soDienThoai')}" th:errors="*{soDienThoai}"></div>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <label class="form-label" for="email">Email<span class="required">*</span></label>
+            <div class="form-field">
+                <input class="form-input" type="text" inputmode="email" th:field="*{email}" placeholder="nguyenvana@gmail.com"
+                       th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'">
+                <div class="field-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Lưu</button>
+            <a class="btn btn-secondary" th:href="@{/giao-dich/them-moi}">Hủy</a>
+        </div>
+    </form>
+</section>
+</body>
+</html>

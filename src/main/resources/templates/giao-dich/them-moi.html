@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/main :: layout(~{::title}, ~{::section})}">
+<head>
+    <title>Thêm mới giao dịch</title>
+</head>
+<body>
+<section>
+    <h1 class="page-title text-center">Thêm mới giao dịch</h1>
+
+    <form class="card form-card" th:action="@{/giao-dich/them-moi}" th:object="${giaoDichForm}" method="post" novalidate>
+        <div class="form-row">
+            <label class="form-label" for="maGiaoDich">Mã giao dịch<span class="required">*</span></label>
+            <div class="form-field">
+                <input class="form-input" type="text" th:field="*{maGiaoDich}" placeholder="MGD-0001"
+                       th:classappend="${#fields.hasErrors('maGiaoDich')} ? 'is-invalid'">
+                <div class="field-error" th:if="${#fields.hasErrors('maGiaoDich')}" th:errors="*{maGiaoDich}"></div>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <label class="form-label" for="maKhachHang">Tên khách hàng<span class="required">*</span></label>
+            <div class="form-field">
+                <div class="field-inline">
+                    <select class="form-input" th:field="*{maKhachHang}"
+                            th:classappend="${#fields.hasErrors('maKhachHang')} ? 'is-invalid'">
+                        <option value="">Chọn khách hàng</option>
+                        <option th:each="khachHang : ${dsKhachHang}"
+                                th:value="${khachHang.maKhachHang}"
+                                th:text="${khachHang.tenKhachHang}"></option>
+                    </select>
+                    <a class="btn btn-outline" th:href="@{/khach-hang/them-moi}">+ Khách hàng</a>
+                </div>
+                <div class="field-error" th:if="${#fields.hasErrors('maKhachHang')}" th:errors="*{maKhachHang}"></div>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <span class="form-label">Loại dịch vụ<span class="required">*</span></span>
+            <div class="form-field">
+                <div class="radio-group">
+                    <label class="radio-item" th:each="loai : ${dsLoaiDichVu}">
+                        <input type="radio" th:field="*{loaiDichVu}" th:value="${loai.name()}">
+                        <span th:text="${loai.tenHienThi}"></span>
+                    </label>
+                </div>
+                <div class="field-error" th:if="${#fields.hasErrors('loaiDichVu')}" th:errors="*{loaiDichVu}"></div>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <label class="form-label" for="ngayGiaoDich">Ngày giao dịch<span class="required">*</span></label>
+            <div class="form-field">
+                <input class="form-input" type="date" th:field="*{ngayGiaoDich}"
+                       th:classappend="${#fields.hasErrors('ngayGiaoDich')} ? 'is-invalid'">
+                <div class="field-error" th:if="${#fields.hasErrors('ngayGiaoDich')}" th:errors="*{ngayGiaoDich}"></div>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <label class="form-label" for="donGia">Đơn giá (VND/m2)<span class="required">*</span></label>
+            <div class="form-field">
+                <input class="form-input" type="text" inputmode="decimal" th:field="*{donGia}"
+                       th:classappend="${#fields.hasErrors('donGia')} ? 'is-invalid'">
+                <div class="field-error" th:if="${#fields.hasErrors('donGia')}" th:errors="*{donGia}"></div>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <label class="form-label" for="dienTich">Diện tích (m2)<span class="required">*</span></label>
+            <div class="form-field">
+                <input class="form-input" type="text" inputmode="decimal" th:field="*{dienTich}"
+                       th:classappend="${#fields.hasErrors('dienTich')} ? 'is-invalid'">
+                <div class="field-error" th:if="${#fields.hasErrors('dienTich')}" th:errors="*{dienTich}"></div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Lưu</button>
+            <a class="btn btn-secondary" th:href="@{/giao-dich}">Hủy</a>
+        </div>
+    </form>
+</section>
+</body>
+</html>

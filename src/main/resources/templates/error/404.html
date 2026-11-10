@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/main :: layout(~{::title}, ~{::section})}">
+<head>
+    <title>Không tìm thấy</title>
+</head>
+<body>
+<section class="not-found">
+    <h1 class="page-title">404</h1>
+    <p th:text="${thongBaoLoi} ?: 'Không tìm thấy trang bạn yêu cầu'"></p>
+    <a class="btn btn-primary" th:href="@{/giao-dich}">Về danh sách giao dịch</a>
+</section>
+</body>
+</html>

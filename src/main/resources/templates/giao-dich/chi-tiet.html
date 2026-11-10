@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/main :: layout(~{::title}, ~{::section})}">
+<head>
+    <title>Chi tiết giao dịch</title>
+</head>
+<body>
+<section>
+    <h1 class="page-title text-center">Chi tiết giao dịch</h1>
+
+    <div class="card form-card">
+        <dl class="detail-list">
+            <div class="detail-row">
+                <dt>Mã giao dịch</dt>
+                <dd th:text="${giaoDich.maGiaoDich}"></dd>
+            </div>
+            <div class="detail-row">
+                <dt>Loại dịch vụ</dt>
+                <dd><span class="badge" th:text="${giaoDich.loaiDichVu.tenHienThi}"></span></dd>
+            </div>
+            <div class="detail-row">
+                <dt>Ngày giao dịch</dt>
+                <dd th:text="${#temporals.format(giaoDich.ngayGiaoDich, 'dd/MM/yyyy')}"></dd>
+            </div>
+            <div class="detail-row">
+                <dt>Đơn giá (VND/m2)</dt>
+                <dd th:text="${#numbers.formatDecimal(giaoDich.donGia, 1, 'POINT', 0, 'COMMA')}"></dd>
+            </div>
+            <div class="detail-row">
+                <dt>Diện tích (m2)</dt>
+                <dd th:text="${giaoDich.dienTich.toPlainString()}"></dd>
+            </div>
+            <div class="detail-row">
+                <dt>Tên khách hàng</dt>
+                <dd th:text="${giaoDich.tenKhachHang}"></dd>
+            </div>
+            <div class="detail-row">
+                <dt>Số điện thoại</dt>
+                <dd th:text="${giaoDich.soDienThoai}"></dd>
+            </div>
+            <div class="detail-row">
+                <dt>Email</dt>
+                <dd th:text="${giaoDich.email}"></dd>
+            </div>
+        </dl>
+
+        <div class="form-actions">
+            <a class="btn btn-warning" href="#xac-nhan-xoa">Xóa</a>
+            <a class="btn btn-primary" th:href="@{/giao-dich}">Quay lại</a>
+        </div>
+    </div>
+
+    <div class="modal" id="xac-nhan-xoa">
+        <div class="modal-box">
+            <p class="modal-message">Bạn có muốn xóa giao dịch này không?</p>
+            <div class="modal-actions">
+                <form th:action="@{/giao-dich/{ma}/xoa(ma=${giaoDich.maGiaoDich})}" method="post">
+                    <button class="btn btn-danger" type="submit">Có</button>
+                </form>
+                <a class="btn btn-secondary" th:href="@{/giao-dich}">Không</a>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

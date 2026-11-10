@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/main :: layout(~{::title}, ~{::section})}">
+<head>
+    <title>Danh sách giao dịch nhà đất</title>
+</head>
+<body>
+<section>
+    <h1 class="page-title">Danh sách giao dịch nhà đất</h1>
+
+    <div class="card">
+        <div class="toolbar">
+            <a class="btn btn-success" th:href="@{/giao-dich/them-moi}">Thêm mới</a>
+
+            <form class="search-form" th:action="@{/giao-dich}" method="get">
+                <select class="form-input" name="loaiDichVu">
+                    <option value="">Chọn loại bất động sản</option>
+                    <option th:each="loai : ${dsLoaiDichVu}"
+                            th:value="${loai.name()}"
+                            th:text="${loai.tenHienThi}"
+                            th:selected="${loai == tieuChi.loaiDichVu}"></option>
+                </select>
+                <input class="form-input" type="text" name="tenKhachHang" placeholder="Tên khách hàng"
+                       th:value="${tieuChi.tenKhachHang}">
+                <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+            </form>
+        </div>
+
+        <div class="table-wrap">
+            <table class="data-table">
+                <thead>
+                <tr>
+                    <th>Mã giao dịch</th>
+                    <th>Tên khách hàng</th>
+                    <th>Ngày giao dịch</th>
+                    <th>Loại dịch vụ</th>
+                    <th class="text-right">Đơn giá (VND/m2)</th>
+                    <th class="text-right">Diện tích (m2)</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${dsGiaoDich}">
+                    <td class="cell-code" th:text="${item.maGiaoDich}"></td>
+                    <td th:text="${item.tenKhachHang}"></td>
+                    <td th:text="${#temporals.format(item.ngayGiaoDich, 'dd/MM/yyyy')}"></td>
+                    <td><span class="badge" th:text="${item.loaiDichVu.tenHienThi}"></span></td>
+                    <td class="text-right" th:text="${#numbers.formatDecimal(item.donGia, 1, 'POINT', 0, 'COMMA')}"></td>
+                    <td class="text-right" th:text="${item.dienTich.toPlainString()}"></td>
+                    <td class="text-center">
+                        <a class="link-detail" th:href="@{/giao-dich/{ma}(ma=${item.maGiaoDich})}">Chi tiết</a>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(dsGiaoDich)}">
+                    <td class="empty-row" colspan="7">Không có giao dịch nào</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+</body>
+</html>
